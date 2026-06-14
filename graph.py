@@ -1,7 +1,7 @@
 from state import AgentState
 from langgraph.graph import StateGraph, END
 
-
+from llm import llm
 
 def planner_node(state : AgentState):
     print("Planner Node is Running")
@@ -11,29 +11,64 @@ def planner_node(state : AgentState):
 def search_node(state: AgentState):
     print("Search Node Running")
 
-    state["jobs_found"] = ""
+    state["jobs_found"] = """
+    Python
+    SQL
+    AWS
+    REST APIs
+    Docker
+    """
 
     return state
 
 def analysis_node(state: AgentState):
     print("Analysis Node Running")
 
-    state["skill_gap_analysis"] = """
-    Learn AWS
-    Improve SQL
+    prompt = f"""
+    You are a senior career coach.
+
+    Analyze the following skills:
+
+    {state['jobs_found']}
+
+    Tell me:
+    1. Skill gaps
+    2. Important technologies
+    3. Learning priorities
+
+    Keep the response under 150 words.
     """
 
-    return state
+    response = llm.invoke(prompt)
 
+    state["skill_gap_analysis"] = response.content
+
+    return state
 
 def roadmap_node(state: AgentState):
     print("Roadmap Node Running")
 
-    state["learning_plan"] = """
-    Week 1 SQL
-    Week 2 AWS
-    Week 3 APIs
+    prompt = f"""
+    You are an experienced software engineering mentor.
+
+    Based on the following skill gap analysis:
+
+    {state["skill_gap_analysis"]}
+
+    Create a structured 4-week learning roadmap.
+
+    For each week include:
+    1. Topics to learn
+    2. Practical exercises
+    3. Mini project ideas
+    4. Interview questions to practice
+
+    Keep the roadmap practical and focused on getting a job.
     """
+
+    response = llm.invoke(prompt)
+
+    state["learning_plan"] = response.content
 
     return state
 

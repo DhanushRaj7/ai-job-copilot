@@ -4,6 +4,10 @@ from langgraph.graph import StateGraph, END
 from llm import llm
 from tools import search_jobs
 
+
+
+from planner_utils import resolve_plan
+
 def planner_node(state: AgentState):
     print("Planner Node Running")
 
@@ -38,10 +42,12 @@ def planner_node(state: AgentState):
 
     response = llm.invoke(prompt)
 
-    state["tasks"] = [
+    tasks = [
         task.strip().lower()
         for task in response.content.split(",")
     ]
+
+    state["tasks"] = resolve_plan(tasks)       
 
     state["task_index"] = 0
 

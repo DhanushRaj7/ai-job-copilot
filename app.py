@@ -1,7 +1,7 @@
 from graph import app
 
 initial_state = {
-    "user_goal": "Give me React interview questions",
+    "user_goal": "Create a machine learning roadmap",
 
     "jobs_found": "",
     "skill_gap_analysis": "",

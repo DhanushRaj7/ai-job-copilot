@@ -7,6 +7,8 @@ from ui.header import render_header
 from ui.metrics import render_metrics
 from ui.workflow import render_workflow
 
+from ui.jobs import render_jobs
+
 # -----------------------------------------------------
 # Page Configuration
 # -----------------------------------------------------
@@ -92,65 +94,13 @@ if run:
     # -------------------------------------------------
 
     with jobs_tab:
-
-        st.subheader("💼 Live Job Opportunities")
-
-        jobs_text = result.get("jobs_found", "")
-
-        jobs = jobs_text.split("=" * 60)
-
-        displayed = False
-
-        for job in jobs:
-
-            if not job.strip():
-                continue
-
-            title = "Job Opportunity"
-            company = ""
-            location = ""
-
-            for line in job.splitlines():
-
-                if line.startswith("Job Title"):
-                    title = line.replace("Job Title:", "").strip()
-
-                elif line.startswith("Company"):
-                    company = line.replace("Company:", "").strip()
-
-                elif line.startswith("Location"):
-                    location = line.replace("Location:", "").strip()
-
-            with st.expander(f"💼 {title}"):
-
-                col1, col2 = st.columns(2)
-
-                with col1:
-                    st.markdown("**🏢 Company**")
-                    st.write(company if company else "N/A")
-
-                with col2:
-                    st.markdown("**📍 Location**")
-                    st.write(location if location else "N/A")
-
-                st.divider()
-
-                st.text(job)
-
-            displayed = True
-
-        if not displayed:
-            st.info("No jobs were returned.")
+        render_jobs(result)
 
     # -------------------------------------------------
     # ANALYSIS
     # -------------------------------------------------
 
-    with analysis_tab:
-
-        st.subheader("📊 Skill Gap Analysis")
-
-        st.info(result.get("skill_gap_analysis", ""))
+    render_analysis(result)
 
     # -------------------------------------------------
     # ROADMAP

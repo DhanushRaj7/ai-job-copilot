@@ -15,6 +15,8 @@ from ui.roadmap import render_roadmap
 
 from ui.interview import render_interview
 
+from ui.styles import load_css
+
 # -----------------------------------------------------
 # Page Configuration
 # -----------------------------------------------------
@@ -24,6 +26,8 @@ st.set_page_config(
     page_icon="🤖",
     layout="wide",
 )
+
+load_css()
 
 # -----------------------------------------------------
 # Sidebar

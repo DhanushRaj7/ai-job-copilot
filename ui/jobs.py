@@ -3,7 +3,7 @@ import streamlit as st
 
 def render_jobs(result):
     """
-    Render the Jobs tab.
+    Render professional job cards.
     """
 
     st.subheader("💼 Live Job Opportunities")
@@ -23,9 +23,9 @@ def render_jobs(result):
         if not job.strip():
             continue
 
-        title = "Job Opportunity"
-        company = "N/A"
-        location = "N/A"
+        title = "Unknown Position"
+        company = "Unknown Company"
+        location = "Unknown Location"
         description = ""
 
         for line in job.splitlines():
@@ -44,28 +44,34 @@ def render_jobs(result):
             elif line.startswith("Description"):
                 description = job.split("Description:")[-1].strip()
 
-        with st.container():
+        st.markdown(
+            f"""
+<div style="
+background:#F6F8FA;
+border:1px solid #D0D7DE;
+border-radius:12px;
+padding:18px;
+margin-bottom:18px;
+">
 
-            st.markdown(f"## 💼 {title}")
+<h3 style="margin-bottom:6px;">💼 {title}</h3>
 
-            col1, col2 = st.columns(2)
+<p style="margin:0;color:#57606A;">
+🏢 <b>{company}</b>
+</p>
 
-            with col1:
-                st.markdown("**🏢 Company**")
-                st.write(company)
+<p style="margin-top:6px;color:#57606A;">
+📍 {location}
+</p>
 
-            with col2:
-                st.markdown("**📍 Location**")
-                st.write(location)
+</div>
+""",
+            unsafe_allow_html=True,
+        )
 
-            with st.expander("View Job Description"):
+        with st.expander("📄 View Job Description"):
 
-                if description:
-                    st.write(description)
-                else:
-                    st.write(job)
-
-            st.divider()
+            st.write(description)
 
         displayed = True
 

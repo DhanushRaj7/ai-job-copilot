@@ -13,6 +13,8 @@ from ui.analysis import render_analysis
 
 from ui.roadmap import render_roadmap
 
+from ui.interview import render_interview
+
 # -----------------------------------------------------
 # Page Configuration
 # -----------------------------------------------------
@@ -120,13 +122,4 @@ if run:
     # -------------------------------------------------
 
     with interview_tab:
-
-        st.subheader("🎤 Interview Preparation")
-
-        st.markdown(result.get("interview_questions", ""))
-
-    st.divider()
-
-    st.caption(
-        "AI Job Copilot • LangGraph • Groq • Adzuna API • Streamlit"
-    )
+        render_interview(result)

@@ -100,8 +100,11 @@ if run:
     # ANALYSIS
     # -------------------------------------------------
 
-    render_analysis(result)
+    with analysis_tab:
 
+        st.subheader("📊 Skill Gap Analysis")
+
+        st.info(result.get("skill_gap_analysis", ""))
     # -------------------------------------------------
     # ROADMAP
     # -------------------------------------------------

@@ -11,6 +11,8 @@ from ui.jobs import render_jobs
 
 from ui.analysis import render_analysis
 
+from ui.roadmap import render_roadmap
+
 # -----------------------------------------------------
 # Page Configuration
 # -----------------------------------------------------
@@ -111,33 +113,7 @@ if run:
     # -------------------------------------------------
 
     with roadmap_tab:
-
-        st.subheader("🗺️ Personalized Learning Roadmap")
-
-        roadmap = result.get("learning_plan", "")
-
-        if "Week" in roadmap:
-
-            import re
-
-            sections = re.split(r"(?=Week\s+\d+)", roadmap)
-
-            for sec in sections:
-
-                sec = sec.strip()
-
-                if not sec:
-                    continue
-
-                heading = sec.split("\n")[0]
-
-                with st.expander(f"📅 {heading}"):
-
-                    st.markdown(sec)
-
-        else:
-
-            st.markdown(roadmap)
+        render_roadmap(result)
 
     # -------------------------------------------------
     # INTERVIEW

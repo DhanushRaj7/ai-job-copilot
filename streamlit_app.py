@@ -9,6 +9,8 @@ from ui.workflow import render_workflow
 
 from ui.jobs import render_jobs
 
+from ui.analysis import render_analysis
+
 # -----------------------------------------------------
 # Page Configuration
 # -----------------------------------------------------
@@ -101,10 +103,9 @@ if run:
     # -------------------------------------------------
 
     with analysis_tab:
+        render_analysis(result)
 
-        st.subheader("📊 Skill Gap Analysis")
 
-        st.info(result.get("skill_gap_analysis", ""))
     # -------------------------------------------------
     # ROADMAP
     # -------------------------------------------------

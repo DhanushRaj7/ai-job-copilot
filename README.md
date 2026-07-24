@@ -13,9 +13,19 @@
   <img alt="CI" src="https://img.shields.io/github/actions/workflow/status/DhanushRaj7/ai-job-copilot/ci.yml?branch=main&label=CI">
 </p>
 
-<!-- Add a screenshot of the running app for instant credibility:
-![screenshot](docs/app.png)
--->
+## Screenshots
+
+Enter a career goal and the agent plans its steps, searches **real jobs (Adzuna)**, and generates tailored guidance — live:
+
+![AI Job Copilot — home](docs/01-home.png)
+
+| Live job search (real Adzuna listings) | Skill-gap analysis |
+| :---: | :---: |
+| ![Live job search](docs/03-jobs.png) | ![Skill-gap analysis](docs/04-skill-analysis.png) |
+| **Learning roadmap** | **Interview preparation** |
+| ![Learning roadmap](docs/05-roadmap.png) | ![Interview preparation](docs/06-interview.png) |
+
+> ▶ Try it live: **[ai-job-copilot-31.streamlit.app](https://ai-job-copilot-31.streamlit.app/)**
 
 ---
 

@@ -6,16 +6,12 @@ from ui.sidebar import render_sidebar
 from ui.header import render_header
 from ui.metrics import render_metrics
 from ui.workflow import render_workflow
-
 from ui.jobs import render_jobs
-
 from ui.analysis import render_analysis
-
 from ui.roadmap import render_roadmap
-
 from ui.interview import render_interview
-
 from ui.styles import load_css
+
 
 # -----------------------------------------------------
 # Page Configuration
@@ -29,11 +25,13 @@ st.set_page_config(
 
 load_css()
 
+
 # -----------------------------------------------------
 # Sidebar
 # -----------------------------------------------------
 
 render_sidebar()
+
 
 # -----------------------------------------------------
 # Header
@@ -41,14 +39,15 @@ render_sidebar()
 
 goal, run = render_header()
 
+
 # -----------------------------------------------------
 # Run Agent
 # -----------------------------------------------------
 
 if run:
 
-    if goal.strip() == "":
-        st.warning("Please enter a career goal.")
+    if not goal.strip():
+        st.warning("⚠️ Please enter a career goal.")
         st.stop()
 
     initial_state = {
@@ -62,33 +61,36 @@ if run:
         "task_index": 0,
     }
 
-    with st.spinner("🤖 AI Agent is thinking..."):
+    # ---------------------------------------------
+    # Run LangGraph Agent
+    # ---------------------------------------------
 
+    with st.spinner("🤖 AI Agent is analyzing your career goal..."):
         result = app.invoke(initial_state)
 
-    st.success("✅ Agent Completed Successfully!")
+    st.success("✅ Analysis completed successfully!")
 
     st.divider()
 
-    # -------------------------------------------------
-    # Metrics
-    # -------------------------------------------------
+    # ---------------------------------------------
+    # Dashboard
+    # ---------------------------------------------
 
     render_metrics(result)
 
     st.divider()
 
-    # -------------------------------------------------
+    # ---------------------------------------------
     # Workflow
-    # -------------------------------------------------
+    # ---------------------------------------------
 
-    render_workflow(result.get("tasks", []))
+    render_workflow(result)
 
     st.divider()
 
-    # -------------------------------------------------
-    # Tabs
-    # -------------------------------------------------
+    # ---------------------------------------------
+    # Result Tabs
+    # ---------------------------------------------
 
     jobs_tab, analysis_tab, roadmap_tab, interview_tab = st.tabs(
         [
@@ -99,31 +101,30 @@ if run:
         ]
     )
 
-    # -------------------------------------------------
-    # JOBS
-    # -------------------------------------------------
+    # ---------------------------------------------
+    # Jobs
+    # ---------------------------------------------
 
     with jobs_tab:
         render_jobs(result)
 
-    # -------------------------------------------------
-    # ANALYSIS
-    # -------------------------------------------------
+    # ---------------------------------------------
+    # Skill Analysis
+    # ---------------------------------------------
 
     with analysis_tab:
         render_analysis(result)
 
-
-    # -------------------------------------------------
-    # ROADMAP
-    # -------------------------------------------------
+    # ---------------------------------------------
+    # Learning Roadmap
+    # ---------------------------------------------
 
     with roadmap_tab:
         render_roadmap(result)
 
-    # -------------------------------------------------
-    # INTERVIEW
-    # -------------------------------------------------
+    # ---------------------------------------------
+    # Interview Preparation
+    # ---------------------------------------------
 
     with interview_tab:
         render_interview(result)

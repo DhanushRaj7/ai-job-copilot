@@ -3,33 +3,34 @@ import streamlit as st
 
 
 def render_roadmap(result):
-    """
-    Render the Learning Roadmap tab.
-    """
-
-    st.subheader("🗺️ Personalized Learning Roadmap")
+    st.subheader("🗺️ Learning Roadmap")
 
     roadmap = result.get("learning_plan", "")
 
     if not roadmap.strip():
-        st.info("No learning roadmap available.")
+        st.info("No roadmap generated.")
         return
 
-    if "Week" in roadmap:
+    weeks = re.split(r"(?=Week\s+\d+)", roadmap)
 
-        sections = re.split(r"(?=Week\s+\d+)", roadmap)
+    for week in weeks:
 
-        for section in sections:
+        week = week.strip()
 
-            section = section.strip()
+        if not week:
+            continue
 
-            if not section:
-                continue
-
-            heading = section.split("\n")[0]
-
-            with st.expander(f"📅 {heading}", expanded=False):
-                st.markdown(section)
-
-    else:
-        st.markdown(roadmap)
+        st.markdown(
+            f"""
+<div style="
+background:#F6F8FA;
+border-left:6px solid #0969DA;
+padding:18px;
+border-radius:10px;
+margin-bottom:15px;
+">
+{week}
+</div>
+""",
+            unsafe_allow_html=True,
+        )
